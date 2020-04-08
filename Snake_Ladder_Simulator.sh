@@ -14,24 +14,29 @@ LADDER=2
 position_of_player1=$INITIAL_POSITION
 flip=0
 option=0
+number_of_dice_roll=0
+count=0
+
+declare -a arr
 
 function roll_Dice() {
 	flip=$((RANDOM % 6 + 1))
 	option=$((RANDOM % 3))
+	number_of_dice_roll=$(($number_of_dice_roll + 1))
 }
 
 function check_Option() {
 	roll_Dice
 	case $option in
 		$SNAKE)
-					position_of_player1=$(($position_of_player1 - $flip))
-					;;
+			position_of_player1=$(($position_of_player1 - $flip))
+			;;
 		$LADDER)
-					position_of_player1=$(($position_of_player1 + $flip))
-					;;
+			position_of_player1=$(($position_of_player1 + $flip))
+			;;
 		*)
-					position_of_player1=$position_of_player1
-               ;;
+			position_of_player1=$position_of_player1
+         ;;
 		esac
 }
 
@@ -46,8 +51,16 @@ function board() {
 				then
 					position_of_player1=$(($position_of_player1 - $flip))
 				fi
+				arr[$count]=$position_of_player1
+				count=$(($count + 1))
 	done
 }
 
-board
-echo $position_of_player1
+function position_of_player() {
+	board
+	for ((position=0 ; position<$number_of_dice_roll ; position++))
+	do
+		echo "Turn $(($position + 1)) : Position ${arr[$position]}"
+	done
+}
+position_of_player
