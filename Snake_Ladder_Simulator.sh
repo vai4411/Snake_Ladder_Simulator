@@ -34,3 +34,15 @@ function check_Option() {
                ;;
 		esac
 }
+
+function board() {
+	while [ $position_of_player1 -ne $FINAL_POSITION ] || [ $position_of_player1 -gt $FINAL_POSITION ]
+	do
+		check_Option
+		if [ $position_of_player1 -lt $INITIAL_POSITION ]
+		then
+			position_of_player1=$INITIAL_POSITION
+		fi
+	done
+}
+
