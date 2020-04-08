@@ -42,7 +42,12 @@ function board() {
 		if [ $position_of_player1 -lt $INITIAL_POSITION ]
 		then
 			position_of_player1=$INITIAL_POSITION
-		fi
+			elif [ $position_of_player1 -gt $FINAL_POSITION ]
+				then
+					position_of_player1=$(($position_of_player1 - $flip))
+				fi
 	done
 }
 
+board
+echo $position_of_player1
