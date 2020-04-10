@@ -1,6 +1,5 @@
 
 #!/bin/bash -x
-
 echo "Welcome to Snake Ladder Simulator"
 
 #Constant
@@ -18,7 +17,7 @@ number_of_dice_roll=0
 count=0
 player1=0
 player2=0
-flag=0
+turn=0
 
 declare -a arr
 
@@ -39,53 +38,53 @@ function check_Option() {
 			;;
 		*)
 			position_of_player=$position_of_player
-         ;;
-		esac
+			;;
+	esac
 }
 
 function board() {
-check_Option
-      if [ $position_of_player -lt $INITIAL_POSITION ]
-      then
-         position_of_player=$INITIAL_POSITION
-         elif [ $position_of_player -gt $FINAL_POSITION ]
-            then
-               position_of_player=$(($position_of_player - $flip))
-            fi
-            arr[$count]=$position_of_player
-            count=$(($count + 1))
+	check_Option
+	if [ $position_of_player -lt $INITIAL_POSITION ]
+	then
+		position_of_player=$INITIAL_POSITION
+	elif [ $position_of_player -gt $FINAL_POSITION ]
+	then
+		position_of_player=$(($position_of_player - $flip))
+	fi
+	arr[$count]=$position_of_player
+	count=$(($count + 1))
 
 }
 
 function win() {
 	while [ $position_of_player -ne $FINAL_POSITION ] || [ $position_of_player -gt $FINAL_POSITION ]
 	do
-		if [ $flag -eq 0 ]
+		if [ $turn -eq 0 ]
 		then
-			flag=1
+			turn=1
 			position_of_player=$player1
 			board
 			player1=$position_of_player
 		else
-			flag=0
+			turn=0
 			position_of_player=$player2
 			board
 			player2=$position_of_player
 		fi
 	done
-	flag=0
+	turn=0
 }
 
 function position_of_player() {
 	win
 	for ((position=0 ; position<$number_of_dice_roll ; position++))
 	do
-		if [ $flag -eq 0 ]
+		if [ $turn -eq 0 ]
 		then
-			flag=1
+			turn=1
 			echo "Turn $(($position + 1)) : Player1 : Position ${arr[$position]}"
 		else
-			flag=0
+			turn=0
 			echo "Turn $(($position + 1)) : Player2 : Position ${arr[$position]}"
 		fi
 	done
