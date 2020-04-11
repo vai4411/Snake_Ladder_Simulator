@@ -1,4 +1,3 @@
-
 #!/bin/bash -x
 echo "Welcome to Snake Ladder Simulator"
 
@@ -53,7 +52,11 @@ function playingBord() {
 	fi
 	arr[$count]=$positionOfPlayer
 	count=$(($count + 1))
+}
 
+function currentPosition() {
+	positionOfPlayer=$1
+	playingBord
 }
 
 function checkWin() {
@@ -62,13 +65,11 @@ function checkWin() {
 		if [ $turn -eq 0 ]
 		then
 			turn=1
-			positionOfPlayer=$player1
-			playingBord
+			currentPosition $player1
 			player1=$positionOfPlayer
 		else
 			turn=0
-			positionOfPlayer=$player2
-			playingBord
+			currentPosition $player2
 			player2=$positionOfPlayer
 		fi
 	done
